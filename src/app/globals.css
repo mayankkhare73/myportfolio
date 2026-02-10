@@ -97,3 +97,28 @@ body {
   transform: translateY(-2px);
   opacity: 0.8;
 }
+
+/* About section - out of the box */
+.about-glow {
+  box-shadow: 0 0 60px -12px rgba(16, 185, 129, 0.35);
+}
+.about-bento-tile {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.about-bento-tile:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
+}
+.about-stat-number {
+  background: linear-gradient(135deg, #f0fdf4 0%, #a7f3d0 50%, #34d399 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+@keyframes about-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.about-photo-float {
+  animation: about-float 5s ease-in-out infinite;
+}

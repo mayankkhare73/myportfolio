@@ -48,12 +48,12 @@ export default function Home() {
               className="text-center text-white"
             >
               <div className="mb-8 flex justify-center">
-                <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-emerald-200 shadow-2xl">
+                <div className="relative w-40 h-40 rounded-full overflow-hidden shadow-2xl">
                   <Image
-                    src="/images/profile.jpg"
+                    src="/images/mayank.png"
                     alt="Mayank Khare"
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     priority
                   />
                 </div>
@@ -62,7 +62,7 @@ export default function Home() {
                 Mayank Khare
               </h1>
               <p className="text-xl md:text-2xl text-slate-200 mb-8">
-                Full Stack Developer & Designer
+                Software Engineer
               </p>
               <div className="flex justify-center gap-4">
                 <a
@@ -93,34 +93,98 @@ export default function Home() {
           </div>
         </section>
 
-        {/* About Section */}
-        <section id="about" className="py-20 bg-gradient-to-b from-white to-slate-50">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12 text-slate-900">{portfolioData.about.title}</h2>
-            <div className="max-w-3xl mx-auto">
-              <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
-                <div className="w-48 h-48 relative rounded-lg overflow-hidden shadow-xl">
-                  <Image
-                    src="/images/profile.jpg"
-                    alt="Mayank Khare"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="flex-1">
-                  <p className="text-slate-700 leading-relaxed">
-                    {portfolioData.about.description}
-                  </p>
-                </div>
+        {/* About Section - Out of the box: split + bento + motion */}
+        <section id="about" className="min-h-screen flex flex-col md:flex-row relative">
+          {/* Left: Dark statement panel */}
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="w-full md:w-[42%] min-h-[50vh] md:min-h-screen bg-slate-900 flex flex-col justify-center px-6 py-16 md:py-24 md:pl-14 md:pr-8 order-2 md:order-1"
+          >
+            <div className="max-w-md">
+              <p className="text-emerald-400/90 text-sm font-mono uppercase tracking-[0.2em] mb-4">
+                {portfolioData.about.title}
+              </p>
+              <p className="about-stat-number text-7xl md:text-8xl font-black leading-none mb-2">
+                4+
+              </p>
+              <p className="text-slate-400 text-lg md:text-xl font-medium mb-10">
+                years building things that scale
+              </p>
+              <div className="relative w-44 h-44 md:w-52 md:h-52 mb-10 about-photo-float rounded-3xl overflow-hidden">
+                <Image
+                  src="/images/mayank.png"
+                  alt="Mayank Khare"
+                  fill
+                  className="object-contain"
+                  sizes="220px"
+                />
               </div>
-              <div className="flex flex-wrap justify-center gap-4">
-                {portfolioData.about.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="px-4 py-2 bg-gradient-to-r from-emerald-100 to-slate-100 text-slate-700 rounded-full border border-slate-200"
+              <p className="text-white/95 text-base leading-relaxed mb-8">
+                {portfolioData.about.description}
+              </p>
+              <ul className="space-y-3">
+                {portfolioData.about.highlights.map((item, i) => (
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, x: -12 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 + i * 0.08 }}
+                    viewport={{ once: true }}
+                    className="flex items-center gap-3 text-slate-300 text-sm"
                   >
-                    {skill}
-                  </span>
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
+                    {item}
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
+
+          {/* Right: Bento skills grid */}
+          <div className="flex-1 min-h-[50vh] md:min-h-screen bg-gradient-to-b from-white to-slate-50/70 flex flex-col justify-center px-6 py-16 md:py-24 md:pr-14 md:pl-8 order-1 md:order-2">
+            <div className="max-w-3xl w-full mx-auto">
+              <motion.p
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                className="text-slate-500 text-sm font-medium mb-8"
+              >
+                Technical skills · as on CV
+              </motion.p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {portfolioData.about.skillsByCategory.map((group, i) => (
+                  <motion.div
+                    key={group.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: i * 0.06 }}
+                    viewport={{ once: true }}
+                    className={`about-bento-tile bg-white rounded-2xl border border-slate-200/80 p-5 overflow-hidden ${
+                      i === 0 || i === 3 ? "sm:col-span-2" : ""
+                    }`}
+                    style={{
+                      borderTopWidth: "3px",
+                      borderTopColor: ["#10b981", "#f59e0b", "#8b5cf6", "#0ea5e9", "#ec4899", "#14b8a6", "#f97316", "#6366f1"][i % 8],
+                    }}
+                  >
+                    <p className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
+                      {group.label}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {group.skills.map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-2.5 py-1 bg-slate-100/80 text-slate-700 rounded-lg text-xs font-medium hover:bg-slate-200/80 transition-colors"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
